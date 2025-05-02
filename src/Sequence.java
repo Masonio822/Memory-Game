@@ -1,19 +1,19 @@
 import javax.swing.Timer;
 import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class Sequence {
     private static final Sequence instance = new Sequence();
 
     private ArrayList<Integer> sequenceList, sequenceGuesses;
     private int lowBound, highBound;
+    private int roundsComplete;
 
     public Sequence() {
         sequenceGuesses = new ArrayList<>();
         sequenceList = new ArrayList<>();
         lowBound = 1;
         highBound = 10;
+        roundsComplete = 0;
     }
 
     public void setBounds(int low, int high) {
@@ -30,8 +30,7 @@ public class Sequence {
         sequenceGuesses.add(id);
         if (!sequenceGuesses.equals(sequenceList.subList(0, sequenceGuesses.size()))) {
             App.getInstance().endGame();
-        }
-        if (sequenceList.size() == sequenceGuesses.size()) {
+        } else if (sequenceList.size() == sequenceGuesses.size()) {
             App.getButtons().forEach((_, value) -> value.setClickable(false));
             javax.swing.Timer t = new Timer(1000, _ -> {
                 addRandomToSequence();
@@ -41,6 +40,10 @@ public class Sequence {
             });
             t.setRepeats(false);
             t.start();
+            AudioManager.getInstance().getRoundComplete().start();
+            roundsComplete++;
+        } else {
+            AudioManager.getInstance().getCorrect().start();
         }
     }
 
@@ -67,6 +70,22 @@ public class Sequence {
         });
         t.start();
 
+    }
+
+    public void clearSequence() {
+        sequenceList = new ArrayList<>();
+    }
+
+    public void clearGuesses() {
+        sequenceGuesses = new ArrayList<>();
+    }
+
+    public void resetRoundsComplete() {
+        roundsComplete = 0;
+    }
+
+    public int getRoundsComplete() {
+        return roundsComplete;
     }
 
     public ArrayList<Integer> getSequence() {

@@ -6,14 +6,12 @@ public class Sequence {
 
     private ArrayList<Integer> sequenceList, sequenceGuesses;
     private int lowBound, highBound;
-    private int roundsComplete;
 
     public Sequence() {
         sequenceGuesses = new ArrayList<>();
         sequenceList = new ArrayList<>();
         lowBound = 1;
         highBound = 10;
-        roundsComplete = 0;
     }
 
     public void setBounds(int low, int high) {
@@ -41,7 +39,6 @@ public class Sequence {
             t.setRepeats(false);
             t.start();
             AudioManager.getInstance().getRoundComplete().start();
-            roundsComplete++;
         } else {
             AudioManager.getInstance().getCorrect().start();
         }
@@ -80,20 +77,8 @@ public class Sequence {
         sequenceGuesses = new ArrayList<>();
     }
 
-    public void resetRoundsComplete() {
-        roundsComplete = 0;
-    }
-
-    public int getRoundsComplete() {
-        return roundsComplete;
-    }
-
     public ArrayList<Integer> getSequence() {
         return sequenceList;
-    }
-
-    public ArrayList<Integer> getGuesses() {
-        return sequenceGuesses;
     }
 
     public static Sequence getInstance() {

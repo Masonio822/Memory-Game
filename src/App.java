@@ -32,7 +32,7 @@ public class App {
 
         frame.setLayout(new BorderLayout());
 
-        JLabel gameOver = new JLabel("GAME OVER - Your score was: " + Sequence.getInstance().getRoundsComplete());
+        JLabel gameOver = new JLabel("GAME OVER - Your score was: " + (Sequence.getInstance().getSequence().size() - 1));
         gameOver.setForeground(Color.RED);
         gameOver.setFont(gameOver.getFont().deriveFont(Font.BOLD, 30));
         JPanel gameOverPanel = new JPanel();
@@ -45,7 +45,6 @@ public class App {
         restart.addActionListener(_ -> {
             Sequence.getInstance().clearSequence();
             Sequence.getInstance().clearGuesses();
-            Sequence.getInstance().resetRoundsComplete();
             for (Component c : frame.getContentPane().getComponents()) {
                 frame.remove(c);
             }
